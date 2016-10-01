@@ -41,7 +41,7 @@ public class MqttCallbackIMP implements MqttCallback {
                     MqttClient.generateClientId(),
                     new MemoryPersistence());
             mc.connect();
-            mc.publish(sensor, mm);
+            mc.publish(sensor, new String(mm.getPayload()).getBytes(),2,false);
             mc.disconnect();
         } catch (MqttException ex) {
             Logger.getLogger(MqttCallbackIMP.class.getName()).log(Level.SEVERE, null, ex);

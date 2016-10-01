@@ -7,8 +7,8 @@ package ifpb.ads.pos.hub.rest;
 
 import javax.ws.rs.Path;
 import ifpb.ads.pos.hub.recursos.FachadaMQTT;
-import javax.ejb.EJB;
-import javax.ws.rs.Consumes;
+import java.io.Serializable;
+import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
@@ -22,10 +22,10 @@ import javax.ws.rs.core.Response;
  */
 @Path("lampada")
 @Produces({MediaType.APPLICATION_JSON})
-@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-public class Luminosidade {
+//@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+public class Luminosidade implements Serializable{
 
-    @EJB
+    @Inject
     private FachadaMQTT fachadaMQTT;
 
     @GET

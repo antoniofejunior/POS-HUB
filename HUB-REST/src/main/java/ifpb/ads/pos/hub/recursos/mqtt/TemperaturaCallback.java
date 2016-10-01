@@ -5,7 +5,9 @@
  */
 package ifpb.ads.pos.hub.recursos.mqtt;
 
-import javax.ejb.Singleton;
+import ifpb.ads.pos.hub.recursos.ArCondicionado;
+import java.io.Serializable;
+import javax.inject.Inject;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
@@ -14,17 +16,13 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  *
  * @author Junior
  */
-@Singleton
-public class TemperaturaCallback implements MqttCallback {
 
+public class TemperaturaCallback implements MqttCallback, Serializable {
+    @Inject
+    private ArCondicionado arCondicionado; 
     private final String URIServidor;
     private final String sensor;
 //    private final String atuador;
-    public int temperatura;
-
-    public int getTemperatura() {
-        return temperatura;
-    }
 
     public TemperaturaCallback() {
        URIServidor = "tcp://192.168.99.100:1883";
@@ -40,7 +38,7 @@ public class TemperaturaCallback implements MqttCallback {
     @Override
     public void messageArrived(String string, MqttMessage mm) {
         String msg = new String(mm.getPayload());
-        this.temperatura = Integer.parseInt(msg);
+        arCondicionado.setTemperatura(Integer.parseInt(msg));
     }
 
     @Override

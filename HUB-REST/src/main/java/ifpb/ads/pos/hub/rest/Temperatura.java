@@ -6,7 +6,8 @@
 package ifpb.ads.pos.hub.rest;
 
 import ifpb.ads.pos.hub.recursos.FachadaMQTT;
-import javax.ejb.EJB;
+import java.io.Serializable;
+import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 
@@ -19,9 +20,9 @@ import javax.ws.rs.core.Response;
  * @author Junior
  */
 @Path("temperatura")
-public class Temperatura {
+public class Temperatura implements Serializable{
 
-    @EJB
+    @Inject
     private FachadaMQTT fachadaMQTT;
 
     @GET
@@ -31,7 +32,7 @@ public class Temperatura {
 
     @Path("{aumentar}")
     @PUT
-    public Response setLampada(@PathParam("aumentar") boolean aumentar) {
+    public Response setTemperatura(@PathParam("aumentar") boolean aumentar) {
         int temp = fachadaMQTT.getTemperatura();
         if(aumentar && (temp <= 28)){
             fachadaMQTT.setTemperatura(temp ++);

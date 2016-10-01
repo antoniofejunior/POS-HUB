@@ -5,7 +5,9 @@
  */
 package ifpb.ads.pos.hub.recursos.mqtt;
 
-import javax.ejb.Singleton;
+import ifpb.ads.pos.hub.recursos.Lampada;
+import java.io.Serializable;
+import javax.inject.Inject;
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
@@ -14,21 +16,21 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  *
  * @author Junior
  */
-@Singleton
-public class LuminosidadeCallback implements MqttCallback {
+
+public class LuminosidadeCallback implements MqttCallback , Serializable{
 
     private final String URIServidor;
     private final String sensor;
-    private boolean ligado;
+    @Inject
+    private Lampada lampada;
 
     public LuminosidadeCallback() {
         this.sensor = "hub/sensor/luminosidade";
         this.URIServidor = "tcp://192.168.99.100:1883";
-        ligado = false;
     }
 
     public boolean isLigado() {
-        return ligado;
+        return lampada.isLigada();
     }
 
     @Override
@@ -39,8 +41,8 @@ public class LuminosidadeCallback implements MqttCallback {
     @Override
     public void messageArrived(String string, MqttMessage mm) {
         String msg = new String(mm.getPayload());
-        if (ligado != msg.equalsIgnoreCase("ligado")) {
-            ligado = msg.equalsIgnoreCase("ligado");
+        if (lampada.isLigada() != msg.equalsIgnoreCase("ligado")) {
+            lampada.setLigada(msg.equalsIgnoreCase("ligado"));
         }
     }
 

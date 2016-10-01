@@ -42,7 +42,7 @@ public class ClientThread extends Thread {
                     new MemoryPersistence());
             cliente.connect();
             cliente.setCallback(new MqttCallbackIMP(sensor, URIServidor));
-            cliente.subscribe(atuador);
+            cliente.subscribe(atuador,2);
         } catch (MqttException ex) {
             Logger.getLogger(ClientThread.class.getName()).log(Level.SEVERE, null, ex);
         }

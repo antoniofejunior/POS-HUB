@@ -5,9 +5,8 @@
  */
 package ifpb.ads.pos.hub.recursos;
 
-import ifpb.ads.pos.hub.recursos.mqtt.LuminosidadeCallback;
 import ifpb.ads.pos.hub.recursos.mqtt.PublicadorMQTTLuminsidade;
-import ifpb.ads.pos.hub.recursos.mqtt.TemperaturaCallback;
+import ifpb.ads.pos.hub.recursos.mqtt.PublicadorMqttTemperatura;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -19,30 +18,30 @@ import javax.ejb.Stateless;
 public class FachadaMqttImp implements FachadaMQTT {
 
     @EJB
-    private LuminosidadeCallback lc;
+    private Lampada lampada;
 
     @EJB
-    private TemperaturaCallback tc;
+    private ArCondicionado arCondicionado;
 
     @Override
     public boolean getlampada() {
-        return lc.isLigado();
+        return lampada.isLigada();
     }
 
     @Override
     public int getTemperatura() {
-        return tc.getTemperatura();
+        return arCondicionado.getTemperatura();
     }
 
     @Override
     public void setLampada(boolean estado) {
-        PublicadorMQTTLuminsidade lampada = new PublicadorMQTTLuminsidade();
-        lampada.ligar(estado);
+        PublicadorMQTTLuminsidade plampada = new PublicadorMQTTLuminsidade();
+        plampada.ligar(estado);
     }
 
     @Override
     public void setTemperatura(int temperatura) {
-        
+        new PublicadorMqttTemperatura().alterar(temperatura);
     }
 
 }
