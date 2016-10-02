@@ -7,12 +7,14 @@ package ifpb.ads.pos.hub.recursos;
 
 import java.io.Serializable;
 import javax.ejb.Singleton;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author Junior
  */
 @Singleton
+@XmlRootElement
 public class ArCondicionado implements Serializable{
 
     private boolean ligado;

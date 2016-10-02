@@ -7,6 +7,7 @@ package ifpb.ads.pos.hub.recursos.mqtt;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.enterprise.context.ApplicationScoped;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
@@ -17,17 +18,11 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
  */
 public class PublicadorMqttTemperatura {
 
-    private final String sensor;
-    private final String atuador;
-    private final String URIServidor;
+    private final static String sensor = "hub/sensor/temperatura";
+    private final static String atuador = "hub/atuador/arcondicionado";
+    private final static String URIServidor = "tcp://192.168.99.100:1883";
 
-    public PublicadorMqttTemperatura() {
-        this.sensor = "hub/sensor/temperatura";
-        this.atuador = "hub/atuador/arcondicionado";
-        this.URIServidor = "tcp://192.168.99.100:1883";
-    }
-
-    public void alterar(int temperatura) {
+    public static void alterarTemperatura(int temperatura) {
 
         try {
             MqttClient mc = new MqttClient(URIServidor,
@@ -44,18 +39,4 @@ public class PublicadorMqttTemperatura {
 
     }
 
-    public boolean getEstado() {
-        try {
-            MqttClient cliente = new MqttClient(URIServidor,
-                    MqttClient.generateClientId(),
-                    new MemoryPersistence());
-            cliente.connect();
-            cliente.setCallback(new TemperaturaCallback());
-            cliente.subscribe(sensor);
-
-        } catch (MqttException ex) {
-            Logger.getLogger(PublicadorMQTTLuminsidade.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return false;
-    }
 }

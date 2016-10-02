@@ -41,6 +41,7 @@ public class LuminosidadeCallback implements MqttCallback , Serializable{
     @Override
     public void messageArrived(String string, MqttMessage mm) {
         String msg = new String(mm.getPayload());
+        System.out.println(msg);
         if (lampada.isLigada() != msg.equalsIgnoreCase("ligado")) {
             lampada.setLigada(msg.equalsIgnoreCase("ligado"));
         }

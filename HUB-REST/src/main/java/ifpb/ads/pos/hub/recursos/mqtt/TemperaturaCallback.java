@@ -38,6 +38,7 @@ public class TemperaturaCallback implements MqttCallback, Serializable {
     @Override
     public void messageArrived(String string, MqttMessage mm) {
         String msg = new String(mm.getPayload());
+        System.out.println(msg);
         arCondicionado.setTemperatura(Integer.parseInt(msg));
     }
 

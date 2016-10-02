@@ -17,17 +17,11 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
  */
 public class PublicadorMQTTLuminsidade {
 
-    private final String sensor;
-    private final String atuador;
-    private final String URIServidor;
+    private final static String sensor = "hub/sensor/luminosidade";
+    private final static String atuador = "hub/atuador/lampada";
+    private final static String URIServidor = "tcp://192.168.99.100:1883";
 
-    public PublicadorMQTTLuminsidade() {
-        this.sensor = "hub/sensor/luminosidade";
-        this.atuador = "hub/atuador/lampada";
-        this.URIServidor = "tcp://192.168.99.100:1883";
-    }
-
-    public void ligar(boolean status) {
+    public static void ligarLampada(boolean status) {
 
         try {
             MqttClient mc = new MqttClient(URIServidor,
@@ -45,20 +39,5 @@ public class PublicadorMQTTLuminsidade {
             Logger.getLogger(PublicadorMQTTLuminsidade.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-    }
-
-    public boolean getEstado() {
-        try {
-            MqttClient cliente = new MqttClient(URIServidor,
-                    MqttClient.generateClientId(),
-                    new MemoryPersistence());
-            cliente.connect();
-//            cliente.setCallback();
-            cliente.subscribe(sensor);
-
-        } catch (MqttException ex) {
-            Logger.getLogger(PublicadorMQTTLuminsidade.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return false;
     }
 }
