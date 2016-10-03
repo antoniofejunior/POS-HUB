@@ -6,23 +6,33 @@
 package ifpb.ads.pos.hub.recursos;
 
 import java.io.Serializable;
-import javax.ejb.Singleton;
+//import javax.ejb.Singleton;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author Junior
  */
-@Singleton
+//@Singleton
 @XmlRootElement
 public class Lampada implements Serializable {
-
+//    
+    private static Lampada lampada;
     private boolean ligada;
 
-    public Lampada() {
+//    public Lampada() {
+//    this.ligada = true;
+//    }
+    private Lampada() {
     this.ligada = true;
     }
 
+    public static Lampada getInstancia(){
+      if(lampada == null)
+          return new Lampada();
+      return lampada;
+    }
+    
     public boolean isLigada() {
         return ligada;
     }

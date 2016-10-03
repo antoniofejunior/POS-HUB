@@ -6,25 +6,39 @@
 package ifpb.ads.pos.hub.recursos;
 
 import java.io.Serializable;
-import javax.ejb.Singleton;
+//import javax.ejb.Singleton;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author Junior
  */
-@Singleton
+//@Singleton
 @XmlRootElement
 public class ArCondicionado implements Serializable{
 
+    private static ArCondicionado arCondicionado;
     private boolean ligado;
     private int temperatura;
 
-    public ArCondicionado() {
-        this(false, 0);
+//    public ArCondicionado() {
+//        this(true, 28);
+//    }
+    private ArCondicionado() {
+        this(true, 28);
+    }
+    
+    public static ArCondicionado getInstancia(){
+        if(arCondicionado == null)
+            return new ArCondicionado();
+        return arCondicionado;
     }
 
-    public ArCondicionado(boolean ligado, int temperatura) {
+//    public ArCondicionado(boolean ligado, int temperatura) {
+//        this.ligado = ligado;
+//        this.temperatura = temperatura;
+//    }
+    private ArCondicionado(boolean ligado, int temperatura) {
         this.ligado = ligado;
         this.temperatura = temperatura;
     }

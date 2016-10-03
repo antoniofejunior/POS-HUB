@@ -16,13 +16,12 @@ import org.eclipse.paho.client.mqttv3.MqttMessage;
  *
  * @author Junior
  */
-
-public class LuminosidadeCallback implements MqttCallback , Serializable{
+public class LuminosidadeCallback implements MqttCallback, Serializable {
 
     private final String URIServidor;
     private final String sensor;
-    @Inject
-    private Lampada lampada;
+//    @Inject
+//    private Lampada lampada;
 
     public LuminosidadeCallback() {
         this.sensor = "hub/sensor/luminosidade";
@@ -30,7 +29,8 @@ public class LuminosidadeCallback implements MqttCallback , Serializable{
     }
 
     public boolean isLigado() {
-        return lampada.isLigada();
+        return Lampada.getInstancia().isLigada();
+//    return lampada.isLigada();
     }
 
     @Override
@@ -42,10 +42,16 @@ public class LuminosidadeCallback implements MqttCallback , Serializable{
     public void messageArrived(String string, MqttMessage mm) {
         String msg = new String(mm.getPayload());
         System.out.println(msg);
-        if (lampada.isLigada() != msg.equalsIgnoreCase("ligado")) {
-            lampada.setLigada(msg.equalsIgnoreCase("ligado"));
+//        if (Lampada.getInstancia().isLigada() != msg.equalsIgnoreCase("ligado")) {
+//            Lampada.getInstancia().setLigada(msg.equalsIgnoreCase("ligado"));
+//        }
+//        if (msg.equalsIgnoreCase("ligada")) {
+//          lampada.setLigada(true));
+            Lampada.getInstancia().setLigada(msg.equalsIgnoreCase("ligada"));
+//        } else {
+//            Lampada.getInstancia().setLigada(false);
+//            lampada.setLigada(false)
         }
-    }
 
     @Override
     public void deliveryComplete(IMqttDeliveryToken imdt) {
